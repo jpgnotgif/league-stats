@@ -6,11 +6,20 @@ var router = express.Router();
 router.post('/', function(req, res, next) {
 
   var id;
+  var stats;
+
   var summonerName = req.body.name;
   var summoner = new summonerModel(summonerName);
   summoner.requestId( function(id) {
-    console.log("ID from callback: " + id);
-    res.json({name: summoner.name, id: id});
+    summoner.id = id;
+
+    summoner.requestStats( function(stats) {
+      summoner.stats = stats;
+
+      res.json({name: summoner.name, id: id, stats: stats});
+
+    });
+
   });
 
 });
