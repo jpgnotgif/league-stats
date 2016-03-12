@@ -11,8 +11,20 @@ html
     script(src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js")
     script(src="/javascripts/champion-images.js")
   body
-      div
-      div
-      nav(class="navbar navbar-inverse", role="navigation", style="padding-left:130px;")
-        ul(class="nav navbar-nav")
-      block content
+    nav.navbar.navbar-default.navbar-static-top
+      .container
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='#') LOL
+          #navbar.navbar-collapse.collapse
+            ul.nav.navbar-nav
+              li.active
+                a(href='/') LOL Stats
+          .nav-collapse
+
+
+    block content

@@ -2,11 +2,9 @@ extends layout
 
 block content
   .container
-    div
-      form(action="/summoner/stats" method="GET", class="form-horizontal")
-        .form-group
-          .row
-            input(class="form-control", name="name", type="text", placeholder="Enter a summoner name")
-        .form-group
-          .row
-            button(type="submit", class="btn btn-default") Summon stats!
+    form(action="/summoner/stats" method="GET")
+     .form-group
+       label(for="name") Name
+       input(class="form-control", name="name", type="text", placeholder="Enter a summoner name")
+     .form-group
+       button(type="submit", class="btn btn-default") Summon stats!
