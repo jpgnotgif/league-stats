@@ -6,15 +6,15 @@ block content
       h1 Stats for #{name}
     - each gameStats in stats
       .row.well
+        - var imgUrl = gameStats["champion_img"]
         - var kills = gameStats["kills"]
         - var deaths = gameStats["deaths"]
         - var assists = gameStats["assists"]
         - var kda = gameStats["kda_ratio"]
+        - var championId = gameStats["champion_id"]
 
         .col-sm-3
-          p User Photo
+          img.champion-photo(data-champion-id=championId)
         .col-sm-3
           p #{kills} / #{deaths} / #{assists}
           p #{kda}
-        .col-sm-3
-          p Some other stuff

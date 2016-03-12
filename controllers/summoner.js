@@ -1,4 +1,6 @@
 var summonerModel = require('../models/summoner');
+var championModel = require('../models/champion');
+
 var express = require('express');
 var router = express.Router();
 
@@ -8,6 +10,7 @@ router.get('/stats', function(req, res, next) {
   var stats;
   var summonerName = req.query.name;
   var summoner = new summonerModel(summonerName);
+
   summoner.requestId( function(id) {
     // TODO: error handling
 
@@ -17,6 +20,16 @@ router.get('/stats', function(req, res, next) {
       res.render('summoner/stats', {name: summoner.name, stats: stats})
     });
   });
+});
+
+router.get('/champion_img', function(req, res, next) {
+  var championId = req.query.championId;
+
+  var champion = new championModel(championId);
+  champion.requestImg(function(championImgUrl) {
+    res.send(championImgUrl);
+  });
+
 });
 
 module.exports = router;
