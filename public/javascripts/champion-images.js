@@ -1,13 +1,15 @@
 $(document).ready(function() {
+  var groupedChampionIdElements = _.groupBy($("img.champion-photo"), function(e) {
+    return $(e).data("champion-id");
+  });
 
-
-
-  $("img.champion-photo").each(function(i, e) {
-    var $currentImage = $(e);
-    var championId = $currentImage.data('champion-id');
+  _.each(groupedChampionIdElements, function(elements, championId) {
     var url = "http://localhost:3000/summoner/champion_img?championId=" + championId.toString();
+
     $.get(url, function(championImageUrl) {
-      $currentImage.attr('src', championImageUrl);
+      _.each(elements, function(e) {
+        $(e).attr('src', championImageUrl);
+      });
     });
   });
 });
