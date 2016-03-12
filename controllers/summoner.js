@@ -3,10 +3,10 @@ var express = require('express');
 var router = express.Router();
 
 /* GET stats listing listing. */
-router.post('/stats', function(req, res, next) {
+router.get('/stats', function(req, res, next) {
   var id;
   var stats;
-  var summonerName = req.body.name;
+  var summonerName = req.query.name;
   var summoner = new summonerModel(summonerName);
   summoner.requestId( function(id) {
     // TODO: error handling

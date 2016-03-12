@@ -1,16 +1,20 @@
 extends ../layout
 
 block content
-  h1= name
-  table(class="table")
-    tr
-      th kills
-      th deaths
-      th assists
-      th KDA
-      - each gameStats in stats
-          tr
-            td= gameStats["kills"]
-            td= gameStats["deaths"]
-            td= gameStats["assists"]
-            td= gameStats["kda_ratio"]
+  .container
+    .row
+      h1 Stats for #{name}
+    - each gameStats in stats
+      .row.well
+        - var kills = gameStats["kills"]
+        - var deaths = gameStats["deaths"]
+        - var assists = gameStats["assists"]
+        - var kda = gameStats["kda_ratio"]
+
+        .col-sm-3
+          p User Photo
+        .col-sm-3
+          p #{kills} / #{deaths} / #{assists}
+          p #{kda}
+        .col-sm-3
+          p Some other stuff
