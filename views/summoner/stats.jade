@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  h1= name
+  table(class="table")
+    tr
+      th kills
+      th deaths
+      th assists
+      th KDA
+      - each gameStats in stats
+          tr
+            td= gameStats["kills"]
+            td= gameStats["deaths"]
+            td= gameStats["assists"]
+            td= gameStats["kda_ratio"]
