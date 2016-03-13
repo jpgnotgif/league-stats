@@ -15,7 +15,7 @@ router.param('id', function(req, res, next, id) {
 router.get('/:id/image', function(req, res, next) {
   var championId = req.params.id;
   var champion = new Champion(championId);
-  champion.requestImg( function(championImageUrl) {
+  champion.requestImg( function(apiStatusCode, championImageUrl) {
     res.send(championImageUrl);
   });
 });
