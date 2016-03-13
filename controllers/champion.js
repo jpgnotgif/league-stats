@@ -3,12 +3,10 @@ var express = require('express');
 var router = express.Router();
 
 router.param('id', function(req, res, next, id) {
-
   /*
    * TODO: use the id to query a cache
    * for champion data
    */
-
   next();
 });
 

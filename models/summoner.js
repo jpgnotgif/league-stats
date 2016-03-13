@@ -8,12 +8,10 @@ var queryParams = {
 
 var Summoner = function(name) {
   this.name = name.toLowerCase();
-
   this.requestId = function(callback) {
     var name = this.name;
     var baseUrl = `https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/${name}`;
-
-    request( {url: baseUrl, qs: queryParams} , function(error, response, body) {
+    request({url: baseUrl, qs: queryParams}, function(error, response, body) {
       var id;
       if (!error && response.statusCode == 200) {
         jsonBody = JSON.parse(body);
