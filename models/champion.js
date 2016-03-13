@@ -10,7 +10,6 @@ var Champion = function(id) {
   this.requestImg = function(callback) {
     queryParams["champData"] = "image";
     var baseUrl = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion/" + this.id;
-    console.log(baseUrl);
     request( {url: baseUrl, qs: queryParams}, function(error, response, body) {
       jsonBody = JSON.parse(body);
       var imgName = jsonBody["image"]["full"];

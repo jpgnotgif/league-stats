@@ -1,5 +1,4 @@
-var championModel = require('../models/champion');
-
+var Champion = require('../models/champion');
 var express = require('express');
 var router = express.Router();
 
@@ -15,9 +14,9 @@ router.param('id', function(req, res, next, id) {
 
 router.get('/:id/image', function(req, res, next) {
   var championId = req.params.id;
-  var champion = new championModel(championId);
-  champion.requestImg(function(championImgUrl) {
-    res.send(championImgUrl);
+  var champion = new Champion(championId);
+  champion.requestImg( function(championImageUrl) {
+    res.send(championImageUrl);
   });
 });
 
