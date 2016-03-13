@@ -22,13 +22,4 @@ router.get('/stats', function(req, res, next) {
   });
 });
 
-router.get('/champion_img', function(req, res, next) {
-  var championId = req.query.championId;
-  var champion = new championModel(championId);
-  champion.requestImg(function(championImgUrl) {
-    res.send(championImgUrl);
-  });
-
-});
-
 module.exports = router;

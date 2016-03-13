@@ -34,11 +34,9 @@ var Summoner = function(name) {
     var gameStats = [];
     var championData = {};
 
-    // REQUEST GAME STATS
     request( {url: baseUrl, qs: queryParams}, function(error, response, body) {
+      // TODO: error handling! what happens is body is undefined of parse call fails?
       jsonBody = JSON.parse(body)
-
-      // EXTRACT ALL GAME STATS AND PUSH DATA TO ARRAY
       jsonBody['games'].forEach( function(gameData, index, array) {
         // TODO: error handling! what happens if these values are undefined?
         var championId = gameData['championId'];
@@ -47,14 +45,9 @@ var Summoner = function(name) {
         var deaths     = stats['numDeaths']       || 0;
         var assists    = stats['assists']         || 0;
         var kdaRatio   = deaths == 0 ? math.round(kills + assists, 3) : math.round((kills + assists)/deaths, 3);
-
         gameStats.push({champion_id: championId, kills: kills, deaths: deaths, assists: assists, kda_ratio: kdaRatio});
       })
-
-
-      //console.log(championData);
       callback(gameStats);
-
     });
   }
 };

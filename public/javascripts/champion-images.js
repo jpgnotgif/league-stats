@@ -4,7 +4,7 @@ $(document).ready(function() {
   });
 
   _.each(groupedChampionIdElements, function(elements, championId) {
-    var url = "/summoner/champion_img?championId=" + championId.toString();
+    var url = "/champion/" + championId.toString() + "/image";
 
     $.get(url, function(championImageUrl) {
       _.each(elements, function(e) {
