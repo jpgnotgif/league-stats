@@ -2,9 +2,8 @@ var request = require('request');
 var math = require('mathjs');
 var championModel = require('./champion');
 
-// TODO: Productionize!
 var queryParams = {
-  api_key: "efecd9e1-f295-4690-9dde-0709791bccad"
+  api_key: process.env.leagueApiKey
 };
 
 var Summoner = function(name) {
@@ -12,8 +11,6 @@ var Summoner = function(name) {
 
   this.requestId = function(callback) {
     var name = this.name;
-
-    // TODO: Productionize!
     var baseUrl = `https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/${name}`;
 
     request( {url: baseUrl, qs: queryParams} , function(error, response, body) {
@@ -46,10 +43,10 @@ var Summoner = function(name) {
         // TODO: error handling! what happens if these values are undefined?
         var championId = gameData['championId'];
         var stats      = gameData['stats'];
-        var kills      = stats['championsKilled'];
-        var deaths     = stats['numDeaths'];
-        var assists    = stats['assists'];
-        var kdaRatio   = math.round((kills + assists)/deaths, 3);
+        var kills      = stats['championsKilled'] || 0;
+        var deaths     = stats['numDeaths']       || 0;
+        var assists    = stats['assists']         || 0;
+        var kdaRatio   = deaths == 0 ? math.round(kills + assists, 3) : math.round((kills + assists)/deaths, 3);
 
         gameStats.push({champion_id: championId, kills: kills, deaths: deaths, assists: assists, kda_ratio: kdaRatio});
       })

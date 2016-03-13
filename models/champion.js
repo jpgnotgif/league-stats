@@ -1,7 +1,7 @@
 var request = require('request')
 
 var queryParams = {
-  api_key: "efecd9e1-f295-4690-9dde-0709791bccad"
+  api_key: process.env.leagueApiKey
 };
 
 var championImgCdnUrl = "http://ddragon.leagueoflegends.com/cdn/6.5.1/img/champion";
@@ -15,8 +15,6 @@ var Champion = function(id) {
       jsonBody = JSON.parse(body);
       var imgName = jsonBody["image"]["full"];
       var imgUrl = championImgCdnUrl + "/" + imgName;
-
-
       callback(imgUrl);
     });
   }
