@@ -5,12 +5,12 @@ describe("Summoner", function() {
   var summoner;
   var summonerApiInterceptor;
   var recentGamesInterceptor;
+  var apiStatusCode;
   var summonerName = "Eveloken";
 
   beforeEach(function() {
     summoner = new Summoner(summonerName);
   })
-
 
   it("should lower case summoner name", function() {
     expect(summoner.name).toEqual(summonerName.toLowerCase());
@@ -18,11 +18,45 @@ describe("Summoner", function() {
 
   describe("ID request", function() {
     it("should complete successfully", function(done) {
-      done();
+      summonerMetadataResponse = {
+        eveloken: {
+          id: 72680640,
+          name: "Eveloken",
+          profileIconId: 1105,
+          summonerLevel: 30,
+          revisionDate: 1457657390000
+        }
+      };
+      summonerApiInteceptor = nock("https://global.api.pvp.net")
+                              .get(`/api/lol/na/v1.4/summoner/by-name/${summoner.name}`)
+                              .query({api_key: process.env.leagueApiKey})
+                              .reply(200, summonerMetadataResponse);
+
+      summoner.requestId( function(apiStatusCode, summonerId) {
+        expect(apiStatusCode).toEqual(200);
+        expect(summonerId).toEqual(summonerMetadataResponse[summoner.name]['id']);
+        done();
+      });
     });
 
     it("should handle invalid summoner name", function(done) {
-      done();
+      notFoundResponse = {
+        status: {
+          message: "Not Found",
+          status_code: 404
+        }
+      }
+      summoner.name = summonerName + "-not-found";
+      summonerApiInteceptor = nock("https://global.api.pvp.net")
+                              .get(`/api/lol/na/v1.4/summoner/by-name/${summoner.name}`)
+                              .query({api_key: process.env.leagueApiKey})
+                              .reply(404, notFoundResponse);
+
+      summoner.requestId( function(apiStatusCode, summonerId) {
+        expect(apiStatusCode).toEqual(404);
+        expect(summonerId).toBeUndefined();
+        done();
+      });
     });
 
     it("should handle JSON parsing errors", function(done) {

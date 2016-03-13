@@ -10,16 +10,16 @@ var Summoner = function(name) {
   this.name = name.toLowerCase();
   this.requestId = function(callback) {
     var name = this.name;
+    var id;
+
     var baseUrl = `https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/${name}`;
     request({url: baseUrl, qs: queryParams}, function(error, response, body) {
       var id;
       if (!error && response.statusCode == 200) {
         jsonBody = JSON.parse(body);
         id = jsonBody[name]['id'];
-      } else {
-          id = undefined;
       }
-      callback(id);
+      callback(response.statusCode, id);
     });
   };
 
