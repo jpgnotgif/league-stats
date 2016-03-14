@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('league-stats:server');
 var http = require('http');
+var exports = module.exports = {};
 
 /**
  * Get port from environment and store in Express.
@@ -88,3 +89,7 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+exports.closeServer = function() {
+  server.close();
+};

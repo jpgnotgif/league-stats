@@ -11,6 +11,8 @@ router.get('/stats', function(req, res, next) {
   var summonerName = req.query.name;
   var summoner = new summonerModel(summonerName);
 
+  console.log('got in stats');
+
   summoner.requestId( function(idStatusCode, id) {
     // TODO: error handling
     summoner.id = id;
