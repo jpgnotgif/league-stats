@@ -16,7 +16,7 @@ router.get('/stats', function(req, res, next) {
       summoner.id = id;
       summoner.requestStats( function(statsStatusCode, stats) {
         summoner.stats = stats;
-        res.render('summoner/stats', {name: summoner.name, stats: stats, status: statsStatusCode});
+        res.status(statsStatusCode).render('summoner/stats', {name: summoner.name, stats: stats});
       });
     } else {
       res.status(404).send("Sorry can't find that!");

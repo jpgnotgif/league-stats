@@ -14,7 +14,6 @@ var Summoner = function(name) {
     var statusCode;
     var baseUrl = `https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/${name}`;
     request({url: baseUrl, qs: queryParams}, function(error, response, body) {
-
       statusCode = response.statusCode;
       var id;
       if (!error && statusCode == 200) {
@@ -37,12 +36,10 @@ var Summoner = function(name) {
     var statusCode;
 
     request( {url: baseUrl, qs: queryParams}, function(error, response, body) {
-      // TODO: error handling! what happens is body is undefined of parse call fails?
       statusCode = response.statusCode;
       try {
         jsonBody = JSON.parse(body)
         jsonBody['games'].forEach( function(gameData, index, array) {
-          // TODO: error handling! what happens if these values are undefined?
           var championId = gameData['championId'];
           var stats      = gameData['stats'];
           var kills      = stats['championsKilled'] || 0;

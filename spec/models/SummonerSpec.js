@@ -45,7 +45,7 @@ describe("Summoner", function() {
           message: "Not Found",
           status_code: 404
         }
-      }
+      };
       summoner.name = summonerName + "-not-found";
       summonerApiInteceptor = nock("https://na.api.pvp.net")
                               .get(`/api/lol/na/v1.4/summoner/by-name/${summoner.name}`)
