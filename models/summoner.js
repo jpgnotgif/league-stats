@@ -22,7 +22,7 @@ var Summoner = function(name) {
           jsonBody = JSON.parse(body);
           id = jsonBody[name]['id'];
         } catch(e) {
-            statusCode = 503;
+          statusCode = 503;
         }
       }
       callback(statusCode, id);
@@ -39,18 +39,22 @@ var Summoner = function(name) {
     request( {url: baseUrl, qs: queryParams}, function(error, response, body) {
       // TODO: error handling! what happens is body is undefined of parse call fails?
       statusCode = response.statusCode;
+      try {
+        jsonBody = JSON.parse(body)
+        jsonBody['games'].forEach( function(gameData, index, array) {
+          // TODO: error handling! what happens if these values are undefined?
+          var championId = gameData['championId'];
+          var stats      = gameData['stats'];
+          var kills      = stats['championsKilled'] || 0;
+          var deaths     = stats['numDeaths']       || 0;
+          var assists    = stats['assists']         || 0;
+          var kdaRatio   = deaths == 0 ? math.round(kills + assists, 3) : math.round((kills + assists)/deaths, 3);
+          gameStats.push({champion_id: championId, kills: kills, deaths: deaths, assists: assists, kda_ratio: kdaRatio});
+        });
+      } catch(e) {
+        statusCode = 503;
+      }
 
-      jsonBody = JSON.parse(body)
-      jsonBody['games'].forEach( function(gameData, index, array) {
-        // TODO: error handling! what happens if these values are undefined?
-        var championId = gameData['championId'];
-        var stats      = gameData['stats'];
-        var kills      = stats['championsKilled'] || 0;
-        var deaths     = stats['numDeaths']       || 0;
-        var assists    = stats['assists']         || 0;
-        var kdaRatio   = deaths == 0 ? math.round(kills + assists, 3) : math.round((kills + assists)/deaths, 3);
-        gameStats.push({champion_id: championId, kills: kills, deaths: deaths, assists: assists, kda_ratio: kdaRatio});
-      })
       callback(statusCode, gameStats);
     });
   }

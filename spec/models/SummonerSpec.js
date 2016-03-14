@@ -83,7 +83,7 @@ describe("Summoner", function() {
       summonerApiInteceptor = nock("https://na.api.pvp.net")
                               .get(`/api/lol/na/v1.4/summoner/by-name/${summoner.name}`)
                               .query({api_key: process.env.leagueApiKey})
-                              .reply(200, rateLimitExceededResponse);
+                              .reply(429, rateLimitExceededResponse);
       summoner.requestId( function(apiStatusCode, summonerId) {
         expect(429).toEqual(apiStatusCode);
         expect(summonerId).toBeUndefined();
