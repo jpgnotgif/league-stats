@@ -11,11 +11,10 @@ router.get('/stats', function(req, res, next) {
   var summonerName = req.query.name;
   var summoner = new summonerModel(summonerName);
 
-  summoner.requestId( function(id) {
+  summoner.requestId( function(idStatusCode, id) {
     // TODO: error handling
-
     summoner.id = id;
-    summoner.requestStats( function(stats) {
+    summoner.requestStats( function(metricsStatusCode, stats) {
       summoner.stats = stats;
       res.render('summoner/stats', {name: summoner.name, stats: stats})
     });

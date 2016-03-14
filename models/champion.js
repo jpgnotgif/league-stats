@@ -15,7 +15,7 @@ var Champion = function(id) {
 
     request({url: baseUrl, qs: queryParams}, function(error, response, body) {
       statusCode = response.statusCode;
-      if (statusCode == 200) {
+      if (!error && statusCode == 200) {
         try {
           jsonBody = JSON.parse(body);
           var imgName = jsonBody["image"]["full"];

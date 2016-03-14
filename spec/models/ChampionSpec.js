@@ -71,7 +71,7 @@ describe("Champion", function() {
                             .reply(200, invalidChampionApiResponse);
 
     champion.requestImg( function(apiStatusCode, actualImgUrl) {
-      expect(apiStatusCode).toEqual(503);
+      expect(503).toEqual(apiStatusCode);
       expect(actualImgUrl).toBeUndefined();
       done();
     });
@@ -88,7 +88,7 @@ describe("Champion", function() {
                   .reply(429, rateLimitExceededResponse);
 
     champion.requestImg( function(apiStatusCode, actualImgUrl) {
-      expect(apiStatusCode).toEqual(429);
+      expect(429).toEqual(apiStatusCode);
       expect(actualImgUrl).toBeUndefined();
       done();
     });
@@ -105,7 +105,7 @@ describe("Champion", function() {
                   .reply(503, apiUnavailableResponse);
 
     champion.requestImg( function(apiStatusCode, actualImgUrl) {
-      expect(apiStatusCode).toEqual(503);
+      expect(503).toEqual(apiStatusCode);
       expect(actualImgUrl).toBeUndefined();
       done();
     });
