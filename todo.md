@@ -1,0 +1,17 @@
+- Completion of unit & functional tests
+- Static asset caching implementation
+  - champion metadata
+  - item metadata
+  - map metadata
+- UI updates around displaying of KDA and game timestamps
+- Display of the following
+  - items used
+  - gold accrued / spent
+  - wards placed
+  - champion categorization (mid, support, carry, etc...)
+  - team mate handles & associated champion images
+- Inclusion of ranked stats
+- User based features
+  - authentication
+  - status indicating if searched player is in game
+  - linking of Twitch account
