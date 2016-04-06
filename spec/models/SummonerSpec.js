@@ -92,13 +92,48 @@ describe("Summoner", function() {
     });
 
     it("should handle case where API is unavailable (http 503)", function(done) {
-      done();
+      apiUnavailableResponse = {
+        status_code: 503,
+        message: "Service Unavailable"
+      }
+      summonerApiInterceptor = nock("https://na.api.pvp.net")
+                               .get(`/api/lol/na/v1.4/summoner/by-name/${summoner.name}`)
+                               .query({api_key: process.env.leagueApiKey})
+                               .reply(503, apiUnavailableResponse);
+      summoner.requestId( function(apiStatusCode, summonerId) {
+        expect(503).toEqual(apiStatusCode);
+        expect(summonerId).toBeUndefined();
+        done();
+      });
     });
   });
 
   describe("recent stats http request", function() {
     it("should complete successfully", function(done) {
-      done();
+      summonerStatsApiResponse = {
+        games: [{
+          championId: 11,
+          stats: {
+            championsKilled: 5,
+            numDeaths: 2,
+            assists: 14
+          }
+        }]
+      }
+      summonerStatsApiInterceptor = nock("https://na.api.pvp.net")
+                                    .get(`/api/lol/na/v1.3/game/by-summoner/${summoner.id}/recent`)
+                                    .query({api_key: process.env.leagueApiKey})
+                                    .reply(200, summonerStatsApiResponse)
+      summoner.requestStats( function(apiStatusCode, stats) {
+        expect(200).toEqual(apiStatusCode);
+        stats.forEach(function(row) {
+          expect(row["kills"]).toBeGreaterThan(0);
+          expect(row["deaths"]).toBeGreaterThan(0);
+          expect(row["assists"]).toBeGreaterThan(0);
+          expect(row["kda_ratio"]).toBeGreaterThan(0);
+        });
+        done();
+      });
     });
 
     it("should handle invalid summoner id", function(done) {

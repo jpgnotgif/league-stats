@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev-start": "./node_modules/.bin/supervisor node ./bin/www"
+    "dev-start": "./node_modules/.bin/supervisor node ./bin/www",
+    "spec": "./node_modules/.bin/jasmine-node spec"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

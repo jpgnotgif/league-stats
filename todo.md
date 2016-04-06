@@ -1,4 +1,5 @@
 - Completion of unit & functional tests
+- Productionize API urls
 - Static asset caching implementation
   - champion metadata
   - item metadata
